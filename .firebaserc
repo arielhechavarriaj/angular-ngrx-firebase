@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-products-test": {
+      "hosting": {
+        "radiosCubanas": [
+          "angular-products-test"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-products-test"
+  }
+}
