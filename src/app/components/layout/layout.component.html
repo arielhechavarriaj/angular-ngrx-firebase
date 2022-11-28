@@ -6,8 +6,8 @@
 <mat-toolbar>Menu</mat-toolbar>
 <mat-nav-list>
   <a mat-list-item href="#">
-    <mat-icon class="mat-18">task</mat-icon>Tarea</a>
-  <a mat-list-item href="#">
+    <mat-icon class="mat-18" routerLink="/task">task</mat-icon>Tarea</a>
+  <a mat-list-item href="#" routerLink="/products">
     <mat-icon class="mat-18">
       <span class="material-symbols-outlined">
 emoji_objects
@@ -31,5 +31,10 @@ contact_page
     </button>
     <span>Angular-NgRx-FireBase</span>
   </mat-toolbar>
+  <mat-progress-bar  *ngIf="(loading$ | async)" color="warn" mode="indeterminate"></mat-progress-bar>
+
+    <router-outlet></router-outlet>
+
+
 </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,0 +1,52 @@
+
+<div class="list">
+  <mat-toolbar style="display: flex; justify-content: space-between">
+    <span>Listado de Productos</span>
+    <button mat-mini-fab routerLink="add-edit">    <mat-icon class="mat-18">add</mat-icon></button>
+
+  </mat-toolbar>
+
+  <div class=" mat-elevation-z8">
+    <table mat-table   [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let row">{{row.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="serial_number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Numero de serie</th>
+        <td mat-cell *matCellDef="let row">{{row.serial_number}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+        <td mat-cell *matCellDef="let row">{{row.price}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="startEdit(row)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteItem(row)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator #paginator
+                   [length]="dataSource?.data?.length"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
+</div>
+

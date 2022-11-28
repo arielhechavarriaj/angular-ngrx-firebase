@@ -35,6 +35,7 @@ import { MatGridListModule} from "@angular/material/grid-list";
 @NgModule({
   declarations: [],
   exports: [
+    MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
     MatListModule,
@@ -65,7 +66,7 @@ import { MatGridListModule} from "@angular/material/grid-list";
     MatButtonToggleModule,
     MatSortModule,
     MatIconModule,
-    MatToolbarModule,MatTooltipModule,MatGridListModule
+    MatTooltipModule,MatGridListModule
   ],
   providers: [
     {
