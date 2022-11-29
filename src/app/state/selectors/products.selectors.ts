@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from '../app.state';
-import {ProductState} from "../../models/Product.state";
+import {ProductState} from "@app/models/Product.state";
 
 export const selectProductsFeature = (state: AppState) => state.products;//TODO: PADRE
 
@@ -22,5 +22,8 @@ export const selectAdding = createSelector(
   selectProductsFeature,
     (state: ProductState) => state.adding
 );
-
+export const selectProductedById  = (id: any)  => createSelector(
+  selectProductsFeature,
+    (state: ProductState) => state.products.filter((_) => _.id == id)
+);
 

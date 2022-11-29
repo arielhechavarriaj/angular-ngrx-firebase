@@ -1,1 +1,8 @@
-<p>dialog-message works!</p>
+<h1 mat-dialog-title>Eliminar Producto</h1>
+<div mat-dialog-content>
+  <p>Esta seguro que desea eliminar esta Producto?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+</div>

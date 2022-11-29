@@ -6,20 +6,24 @@ import {
   deletedProduct,
   deleteProduct,
   loadedProducts,
-  loadProducts
+  loadProducts, selectedProduct, updateProducts
 } from "../actions/products.actions";
-import {ProductState} from "../../models/Product.state";
+import {ProductState} from "@app/models/Product.state";
 
 
 //TODO: (2) Estado inicial!
 
-export const initialState: ProductState = { loading: false,adding: false,deleting: false, products: [],addedProduct:false }
+export const initialState: ProductState = { loading: false,adding: false,deleting: false, products: [],addedProduct:false,productSelected:{
+  name:'',id:'-1',serial_number:'',price:-1
+  } }
 
 
 export const productsReducer = createReducer(
     initialState,
     on(loadProducts, (state) => {
-        return { ...state, loading: true,adding: false,addedProduct: false }
+        return { ...state, loading: true,adding: false,addedProduct: false, productSelected:{
+            name:'',id:'-1',serial_number:'',price:-1
+          }  }
     }),
     on( loadedProducts, (state, { products }) => {
         return { ...state, loading: false, products }
@@ -35,5 +39,12 @@ export const productsReducer = createReducer(
     }) ,
 on( deletedProduct, (state,{}) => {
         return { ...state, loading: false }
+    }),
+  on( selectedProduct, (state, {productSelected}) => {
+        return { ...state, loading: false ,productSelected }
     })
+  , on( updateProducts, (state, {products}) => {
+        return { ...state, loading: false  }
+    })
+
 );

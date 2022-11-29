@@ -4,22 +4,22 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from "../shared/material.module";
+import {MaterialModule} from '../shared/material.module';
 import {LayoutComponent} from './components/layout/layout.component';
 import {LayoutModule} from '@angular/cdk/layout';
-import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
-import {environment} from '../environments/environment';
-import {getDatabase, provideDatabase} from '@angular/fire/database';
+import {environment} from '@env/environment';
 import {StoreModule} from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { IntroTaskComponent } from './components/intro-task/intro-task.component';
-import { AboutComponent } from './components/about/about.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import {ROOT_REDUCERS} from "./state/app.state";
-import {ProductsEffects} from "./state/effects/products.effects";
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {IntroTaskComponent} from './components/intro-task/intro-task.component';
+import {AboutComponent} from './components/about/about.component';
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {ROOT_REDUCERS} from './state/app.state';
+import {ProductsEffects} from './state/effects/products.effects';
+import {AngularFireModule, FIREBASE_OPTIONS} from "@angular/fire/compat";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
-import {AngularFireModule} from "@angular/fire/compat";
+import {ProdCurrencyDirective} from "@app/directives/prod-currency.directive";
+
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import {AngularFireModule} from "@angular/fire/compat";
     LayoutComponent,
     IntroTaskComponent,
     AboutComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ProdCurrencyDirective
   ],
   imports: [
     BrowserModule,
@@ -39,19 +40,20 @@ import {AngularFireModule} from "@angular/fire/compat";
     // provideDatabase(() => getDatabase()),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-
     StoreModule.forRoot(ROOT_REDUCERS),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-
-    EffectsModule.forRoot([ProductsEffects])
-
-
-    //StoreModule.forRoot(ROOT_REDUCERS),
-    //StoreDevtoolsModule.instrument({ name: 'TEST' }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([ProductsEffects]),
 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{provide: FIREBASE_OPTIONS, useValue: environment.firebase}],
+  bootstrap: [AppComponent],
+  exports: [
+    ProdCurrencyDirective
+
+  ]
 })
-export class AppModule { }
+export class AppModule {}

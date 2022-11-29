@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./intro-task.component.scss']
 })
 export class IntroTaskComponent implements OnInit {
-  onAction1: any;
-
   constructor() { }
 
   ngOnInit(): void {

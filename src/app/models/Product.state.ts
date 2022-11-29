@@ -6,4 +6,5 @@ export interface ProductState {
     adding:boolean;
     addedProduct:boolean;
     deleting:boolean;
+    productSelected:ProductModel
 }

@@ -1,34 +1,69 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore} from "@angular/fire/compat/firestore";
-import {Observable, of} from "rxjs";
-import {ProductModel} from "../models/product.interface";
+import { from, Observable, of } from 'rxjs';
+import { ProductModel } from '../models/product.interface';
+import { map } from 'rxjs/operators';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
+  private dbPath = '/products';
 
-  constructor( private store: AngularFirestore) {}
+  productsRef: AngularFirestoreCollection<ProductModel>;
 
-  getProducts(){
-   return this.store.collection('products').valueChanges({ id: 'id' })   as Observable<ProductModel[]>;
+  constructor(private db: AngularFirestore) {
+    this.productsRef = db.collection(this.dbPath);
   }
-  addProducts(data:ProductModel){
-    const id = this.store.createId();
-     return of(this.store.collection('products').add(Object.assign({}, { id }, {...
-         {
-           name:data.name,
-           price:data.price,
-           serial_number:data.serial_number}
-     })))
 
+  get(): Observable<
+    { price: number; name: string; serial_number: string; id: string }[]
+  > {
+    return this.productsRef.snapshotChanges().pipe(
+      map((changes) =>
+        changes.map((c) => {
+          const data = c.payload.doc.data();
+          return {
+            id: c.payload.doc.id,
+            name: data.name,
+            serial_number: data.serial_number,
+            price: data.price,
+          };
+        })
+      )
+    );
   }
-  deleteProduct(data:ProductModel){
-    console.log('llegaste?')
-  //  return of( this.store.collection('products').doc(data.id).delete())
-  //  const id=this.store.collection('products').doc(data.id).ref.path
 
+  add(product: ProductModel) {
+    return of(
+      this.productsRef.add({
+        ...{
+          id: this.db.createId(),
+          name: product.name,
+          price: product.price,
+          serial_number: product.serial_number,
+        },
+      })
+    );
+  }
 
-    return of(   this.store.doc(`products/${data.id}`).delete())
+  update(id: string | undefined, data: any): Observable<any> {
+    return from(
+      this.productsRef.doc(id).update({
+        name: data.name,
+        price: data.price,
+        serial_number: data.serial_number,
+      })
+    );
+  }
+
+  delete(data:ProductModel): Observable<any> {
+  //  return of(this.productsRef.doc(id).delete());
+    return from(
+      this.productsRef.doc(data.id).delete()
+    );
   }
 }
