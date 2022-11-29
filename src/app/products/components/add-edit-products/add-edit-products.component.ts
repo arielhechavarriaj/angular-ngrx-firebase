@@ -45,7 +45,7 @@ export class AddEditProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Validators.pattern(/([A-Za-z0-9]+)/),Validators.maxLength(20)
+
     this.productsForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.minLength(5),Validators.pattern(/([A-Za-z0-9]+)/),Validators.maxLength(20)])],
       serial_number: ['', Validators.compose([Validators.required, Validators.minLength(8),Validators.pattern(/([A-Za-z0-9]+)/),Validators.maxLength(8)])],
