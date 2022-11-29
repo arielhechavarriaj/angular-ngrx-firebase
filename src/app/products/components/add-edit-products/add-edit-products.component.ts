@@ -49,7 +49,7 @@ export class AddEditProductsComponent implements OnInit, OnDestroy {
     this.productsForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.minLength(5),Validators.pattern(/([A-Za-z0-9]+)/),Validators.maxLength(20)])],
       serial_number: ['', Validators.compose([Validators.required, Validators.minLength(8),Validators.pattern(/([A-Za-z0-9]+)/),Validators.maxLength(8)])],
-      price: [100, Validators.compose([Validators.required, Validators.minLength(3),Validators.maxLength(8)])],
+      price: [100, Validators.compose([Validators.required, Validators.minLength(3),Validators.maxLength(3)])],
 
     });
     this.adding$ = this.store.select(selectAdding);
